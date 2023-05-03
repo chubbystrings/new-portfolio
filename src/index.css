@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* font-family: 'Roboto Slab', serif; */
+    font-family: Mulish;
+  }
+  /* body {
+    @apply bg-dark
+  } */
+}
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --transition: 0.5s;
+    --container-width: clamp(300px, 80vw, 960px);
+    --brand-hue: 230;
+    --size-1: calc(var(--container-width) * 0.48);
+    --size-2: 0.1;
+    --size-3: calc(var(--container-width) * 0.04);
+    --cards: 12;
+  }
+
+  footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  /* background-image: radial-gradient(
+    rgba(0, 0, 0, 0) 1px,
+    var(--background) 1px
+  ); */
+  background-size: 4px 4px;
+  backdrop-filter: blur(3px);
+  font-size: 14px;
+  line-height: 14px;
+}
+
+footer::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #f5f5f5;
+  opacity: 0.2;
+}
