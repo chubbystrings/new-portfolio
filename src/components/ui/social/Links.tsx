@@ -68,7 +68,7 @@ export const Links: React.FC<{
     <>
       {toggle && (
         <LinksWrapper
-          className="container"
+          className="container lg:!left-14 sm:!left-6"
           variants={container}
           initial="hidden"
           animate="visible"

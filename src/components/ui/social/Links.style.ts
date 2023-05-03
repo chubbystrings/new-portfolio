@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const LinksWrapper = styled(motion.ul)`
   position: fixed;
-  bottom: 100px;
+  bottom: 110px;
   left: 70px;
   width: 40px;
   display: flex;
@@ -37,20 +37,7 @@ export const LinksWrapper = styled(motion.ul)`
     top: 17px;
   } */
 
-  @media screen and (max-width: 350px) {
-    flex-direction: row;
-    width: 150px;
-    right: 5px;
-    top: 17px;
-    & .item {
-      height: 20px;
-      width: 20px;
-
-      & .item--icon {
-        font-size: 11px;
-      }
-    }
-  }
+  
 `;
 
 export const ToggleButton = styled(motion.div)`

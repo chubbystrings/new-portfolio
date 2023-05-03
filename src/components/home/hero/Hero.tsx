@@ -7,11 +7,11 @@ export default function Hero() {
   const heroRef = useRef(null);
   return (
     <div
-      className="flex  text-dark w-full relative min-h-screen pt-10 md:flex-col md:mb-40 md:items-center"
+      className="flex  text-dark w-full relative min-h-screen sm:min-h-0 sm:mb-10 pt-10 lg:flex-col md:mb-40 sm:pb-24 md:items-center"
       ref={heroRef}
     >
       <motion.div
-        className="w-1/2 lg:hidden md:inline-block md:w-full"
+        className="w-1/2 md:inline-block lg:w-full md:mb-10"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{
@@ -24,7 +24,7 @@ export default function Hero() {
       >
         <img src={profileImage} alt="profile" className="w-full h-auto" />
       </motion.div>
-      <div className="w-1/2 flex flex-col items-center lg:w-full">
+      <div className="w-1/2 flex flex-col items-center lg:w-full sm:w-1/2 xxs:w-full">
         <AnimatedText
           text="Connect, inspire, engage, bring vision into Reality"
           className="text-8xl xl:!text-7xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl xs:!text-lg lg:!w-full xs:!break-all"
