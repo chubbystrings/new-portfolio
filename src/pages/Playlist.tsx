@@ -25,7 +25,7 @@ export default function Playlist() {
             className="text-left text-8xl xl:!text-7xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl xs:!text-lg lg:!w-full xs:!break-all"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 w-full lg:text-center">
           <small className="text-light text-md sm:break-all">Songs I listened to while creating this portfolio enjoy :)</small>
         </div>
         <motion.div initial={{ opacity: 0}} animate={{ opacity: 1 }} transition={{ delay: 1, }}>
