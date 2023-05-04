@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import { MotionValue, motion } from "framer-motion";
 import { IconType } from "react-icons";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
@@ -26,25 +26,28 @@ const Link: React.FC<{
   content: string;
   scrollYProgress: MotionValue<number>
 }> = ({ variants, Icon, content, color, scrollYProgress }) => {
+
+  const [openToolTip, setOpenTooltip] = useState(false);
+
   const handleClick = () => {
-    //
+    setOpenTooltip(!openToolTip)
   };
 
   return (
-    <LightTooltip title={content} placement="left-start" arrow>
-      <motion.li
-        onClick={handleClick}
-        className="item relative"
-        variants={variants}
-      >
-        
-          <IconProgress
-            scrollYProgress={scrollYProgress}
+    <LightTooltip
+      title={content}
+      placement="left-start"
+      arrow
+      open={openToolTip}
+    >
+      <motion.li className="item relative" variants={variants}>
+        <IconProgress
+          scrollYProgress={scrollYProgress}
           image="/logos/react.svg"
           Icon={Icon}
           color={color}
-          />
-       
+          onClick={handleClick}
+        />
       </motion.li>
     </LightTooltip>
   );

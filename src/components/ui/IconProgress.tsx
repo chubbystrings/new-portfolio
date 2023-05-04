@@ -5,14 +5,18 @@ export default function IconProgress({
   Icon,
   scrollYProgress,
   color,
+  onClick
 }: {
   image: string;
   Icon: IconType;
   color: string;
-  scrollYProgress: MotionValue<number>;
+    scrollYProgress: MotionValue<number>;
+  onClick?: () => void
 }) {
+
+  const handleClick = () => onClick ? onClick() : null
   return (
-    <figure className="absolute top-[-4px] stroke-secondary">
+    <figure className="absolute top-[-4px] stroke-secondary" onClick={() => handleClick()}>
       <svg className="-rotate-90" width="95" height="95" viewBox="0 0 100 100">
         <motion.circle
           cx="75"

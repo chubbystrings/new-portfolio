@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="w-1/2 flex flex-col items-center lg:w-full sm:w-1/2 xxs:w-full">
         <AnimatedText
           text="Connect, inspire, engage, bring vision into Reality"
-          className="text-8xl xl:!text-7xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl xs:!text-lg lg:!w-full xs:!break-all"
+          className="text-8xl xl:!text-7xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl xs:!text-2xl xxs:!text-lg lg:!w-full xs:!break-all"
         />
       </div>
     </div>
