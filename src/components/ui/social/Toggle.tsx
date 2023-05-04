@@ -16,8 +16,8 @@ export default function Toggle({
     <ToggleButton
       onClick={() => handleClick()}
       className={`${
-        toggle ? "" : "animate-bounce-slow"
-      } xs:!left-[50%] xs:!translate-x-[-50%] xs:!w-[30px] xs:!h-[30px] lg:!left-9 sm:!left-3`}
+        toggle ? "" : "animate-bounce"
+      }  lg:!left-14 sm:!left-6`}
     >
       <IconContext.Provider value={{ size: "24", color: "#4A193E" }}>
         <MdContactMail />

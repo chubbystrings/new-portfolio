@@ -3,6 +3,8 @@ import { NavLink} from "react-router-dom";
 import { GithubIcon, LinkArrow, LinkedInIcon, TwitterIcon } from "./Icons";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { MdCancel } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 const CustomLink = ({
   to,
@@ -94,6 +96,9 @@ export default function Navbar() {
           <CustomLink type="link" to="/about">
             About
           </CustomLink>
+          <CustomLink type="link" to="/playlist">
+            Playlist
+          </CustomLink>
         </nav>
         <nav className="flex items-center justify-center gap-5">
           <a
@@ -136,12 +141,23 @@ export default function Navbar() {
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-[300px]  px-3 gap-5 z-30 bg-light/40 rounded-lg backdrop-blur-md py-5 hidden lg:flex flex-col justify-between items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         >
+          <div
+            className="absolute top-2 right-2 cursor-pointer"
+            onClick={() => setIsOpen(false)}
+          >
+            <IconContext.Provider value={{ color: "#4A193E" }}>
+              <MdCancel />
+            </IconContext.Provider>
+          </div>
           <nav className="flex gap-5">
             <CustomLink type="button" to="/">
               Home
             </CustomLink>
             <CustomLink type="button" to="/about">
               About
+            </CustomLink>
+            <CustomLink type="button" to="/playlist">
+              Playlist
             </CustomLink>
           </nav>
           <nav className="flex items-center justify-center gap-5 flex-col ">

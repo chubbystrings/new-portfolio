@@ -1,8 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import './App.css';
+import StoreProvider from "./store";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Layout from "./layouts/Main";
+import Playlist from "./pages/Playlist";
+
 
 const router = createBrowserRouter([
   {
@@ -17,10 +20,10 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
       },
-      // {
-      //   path: "projects",
-      //   element: <Projects />,
-      // },
+      {
+        path: "playlist",
+        element: <Playlist />,
+      },
     ],
   },
 ]);
@@ -28,9 +31,9 @@ const router = createBrowserRouter([
 function App() {
  
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <StoreProvider>
+      <RouterProvider router={router} fallbackElement={<h1>Loading....</h1>} />
+    </StoreProvider>
   );
 }
 

@@ -21,7 +21,11 @@ export default function AnimatedText({
           <motion.span
             key={index + "-" + word}
             className={`${
-              index % 3 === 0 ? "text-secondary" : "text-light"
+              index === 0
+                ? "text-light"
+                : index % 2 === 0
+                ? "text-secondary"
+                : "text-light"
             } inline-block`}
             variants={singleWord}
           >
