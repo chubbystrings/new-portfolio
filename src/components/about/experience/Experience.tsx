@@ -34,7 +34,7 @@ const Details = ({
           {position}&nbsp;
           <a
             target="_blank"
-            className="text-secondary font-medium  xxs:break-all"
+            className="text-light font-light text-sm xxs:break-all"
             href={companyLink}
           >
             @{company}
@@ -43,7 +43,9 @@ const Details = ({
         <span className="font-medium capitalize text-light/75 sm:text-lg xs:text-sm xxs:break-all">
           {time} | {address}
         </span>
-        <p className="text-light/75 w-full sm:text-lg xs:text-sm xxs:break-all">{work}</p>
+        <p className="text-light/75 w-full sm:text-lg xs:text-sm xxs:break-all">
+          {work}
+        </p>
       </motion.div>
     </li>
   );
@@ -87,35 +89,19 @@ export default function Experience() {
             address="Lagos, Nigeria"
           />
           <Details
-            position="Frontend Engineer"
-            company="seamlessHR"
-            companyLink="https://semalesshr.com"
-            time="2022-present"
-            work="built and maintained the seamlessHR enterprise Sass application"
+            position="Software Engineer"
+            company="Decagon"
+            companyLink="https://decagon.institute"
+            time="2020-2022"
+            work="A member of the frontend team managing development projects from initial design through completion, optimizing all cross-browser and multi-platform compatibility."
             address="Lagos, Nigeria"
           />
           <Details
-            position="Frontend Engineer"
-            company="seamlessHR"
-            companyLink="https://semalesshr.com"
-            time="2022-present"
-            work="built and maintained the seamlessHR enterprise Sass application"
-            address="Lagos, Nigeria"
-          />
-          <Details
-            position="Frontend Engineer"
-            company="seamlessHR"
-            companyLink="https://semalesshr.com"
-            time="2022-present"
-            work="built and maintained the seamlessHR enterprise Sass application"
-            address="Lagos, Nigeria"
-          />
-          <Details
-            position="Frontend Engineer"
-            company="seamlessHR"
-            companyLink="https://semalesshr.com"
-            time="2022-present"
-            work="built and maintained the seamlessHR enterprise Sass application"
+            position="Junior Fullstack Developer"
+            company="Krystal Lab Solutions"
+            companyLink=""
+            time="2019-2020"
+            work="Designed, built, and maintained clients' websites, worked closely with the development team to proffer solutions and decide on technologies to use."
             address="Lagos, Nigeria"
           />
         </ul>
