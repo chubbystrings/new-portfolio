@@ -8,7 +8,6 @@ import {
 export default function Preloader({
   isVisible,
   setIsVisible,
-  preloadExit,
   setExitComplete,
 }: {
   isVisible: boolean;

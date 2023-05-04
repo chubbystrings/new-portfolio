@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import { MotionValue, motion } from "framer-motion";
-import { IconType, IconContext } from "react-icons";
+import { IconType } from "react-icons";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import IconProgress from "../IconProgress";
@@ -24,7 +25,7 @@ const Link: React.FC<{
   color: string;
   content: string;
   scrollYProgress: MotionValue<number>
-}> = ({ variants, Icon, link, content, color, scrollYProgress }) => {
+}> = ({ variants, Icon, content, color, scrollYProgress }) => {
   const handleClick = () => {
     //
   };

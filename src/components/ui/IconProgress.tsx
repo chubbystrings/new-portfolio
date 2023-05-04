@@ -1,10 +1,8 @@
-import { MotionValue, motion, useScroll } from "framer-motion";
-import { ImWhatsapp } from "react-icons/im";
+import { MotionValue, motion } from "framer-motion";
 import { IconType, IconContext } from "react-icons";
 
 export default function IconProgress({
   Icon,
-  image,
   scrollYProgress,
   color,
 }: {
