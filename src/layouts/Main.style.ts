@@ -18,6 +18,10 @@ export const MainStyle = styled(motion.div)`
     transform-origin: 0%;
     z-index: 2;
   }
+
+  @media screen and (min-width: 1534px) {
+    margin: 0 auto;
+  }
 `;
 
 export const ProgressBarStyle = styled(motion.div)<Props>`

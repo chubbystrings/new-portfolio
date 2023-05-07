@@ -37,32 +37,32 @@ export default function MobileNav({ setIsOpen}: { setIsOpen: (val: boolean) => v
           className=" gap-3 flex items-center bg-secondary text-light p-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent transition-all ease duration-300  hover:border-secondary hover:bg-light hover:text-secondary"
         >
           Resume
-          <LinkArrow className="w-6" />
+          <LinkArrow className="w-5" />
         </a>
         <div className="flex gap-3 items-center justify-between">
           <motion.a
-            href="https://twitter.com"
+            href="https://twitter.com/soft__code"
             target="_blank"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.9 }}
           >
-            <TwitterIcon className="w-6 mr-3" />
+            <TwitterIcon className="w-5 mr-3" />
           </motion.a>
           <motion.a
-            href="https://github.com"
+            href="https://github.com/chubbystrings"
             target="_blank"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.9 }}
           >
-            <GithubIcon className="w-6 mr-3" />
+            <GithubIcon className="w-5 mr-3" />
           </motion.a>
           <motion.a
-            href="https://linkedin.com"
+            href="https://linkedin.com/in/emekaokwor"
             target="_blank"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.9 }}
           >
-            <LinkedInIcon className="w-6 mr-3" />
+            <LinkedInIcon className="w-5 mr-3" />
           </motion.a>
         </div>
       </nav>

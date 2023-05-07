@@ -14,6 +14,9 @@ export default {
         "bounce-slow": "bounce 2s linear infinite",
         "ping-slow": "ping 2s linear infinite",
       },
+      maxWidth: {
+        "8xl": "1535px",
+      },
     },
     screens: {
       "2xl": { max: "1535px" },
