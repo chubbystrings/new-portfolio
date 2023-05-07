@@ -44,7 +44,7 @@ export default function Skills() {
     return `
     & > div:nth-of-type(${i}) {
       height: ${random(150, 50) + 150}px;
-      max-width: 200px;
+      width: 100%;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
       perspective: 1px;
     }
@@ -101,12 +101,12 @@ export default function Skills() {
           cards={imageKeys.length}
           childStyles={child}
           ref={wrapperRef}
-          className="lg-md:!flex lg-md:!justify-center lg-md:!items-center lg-md:flex-wrap lg-md:!w-full lg-md:mx-auto"
+          className="columns-3 sm:columns-2 xxs:columns-1  gap-5 max-w-2xl"
         >
           {imageKeys.map((key, i) => {
             return (
               <motion.div
-                className={`loading transition-height ease duration-100 lg-md:!flex lg-md:!justify-center lg-md:!mr-0`}
+                className={`loading transition-height ease duration-100 l lg-md:!mr-0`}
                 key={i}
                 initial="offscreen"
                 whileInView="onscreen"

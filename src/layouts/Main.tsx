@@ -45,7 +45,7 @@ export default function Main({ className }: { className?: string }) {
       />
       {!preloader && isPreloadExitComplete && (
         <>
-          <MainStyle className="bg-dark">
+          <MainStyle className="bg-dark max-w-8xl">
             <ProgressBarStyle
               className="progress-bar"
               scrX={scrX}
