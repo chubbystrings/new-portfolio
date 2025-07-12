@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { WhotGame } from '../WhotGame';
 import { AIPlayer } from '../AIPlayer';
-import { Card, CardShape } from '../types';
 import { SPECIAL_CARD_RULES } from '../constants';
+import { AIFactory } from '../ai/AIFactory';
 
 describe('AIPlayer', () => {
   let game: WhotGame;
@@ -14,7 +14,9 @@ describe('AIPlayer', () => {
     game.addPlayer('Computer');
     game.startGame();
     
-    aiPlayer = new AIPlayer(game, (game as any).state.players[1].id);
+    const aiStrategy = AIFactory.createStrategy('easy');
+    
+    aiPlayer = new AIPlayer(game, (game as any).state.players[1].id, aiStrategy);
   });
 
   describe('Basic AI Functionality', () => {
