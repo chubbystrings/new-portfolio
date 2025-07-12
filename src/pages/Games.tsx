@@ -1,5 +1,4 @@
 
-import { AIAvatar } from "../assets";
 import PageTransition from "../components/ui/PageTransition";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import styled from "styled-components";

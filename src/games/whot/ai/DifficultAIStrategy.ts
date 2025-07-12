@@ -31,7 +31,7 @@ export class DifficultAIStrategy implements AIStrategy {
 
     // Strategy 2: Aggressive play when opponent is close to winning
     if (opponentHandSize <= 2) {
-      return this.selectAggressiveCard(validPlays, hand, gameState);
+      return this.selectAggressiveCard(validPlays, hand);
     }
 
     // Strategy 3: Conservative play when we have many cards
@@ -40,7 +40,7 @@ export class DifficultAIStrategy implements AIStrategy {
     }
 
     // Strategy 4: Balanced play with card counting
-    return this.selectBalancedCardWithCounting(validPlays, hand, gameState);
+    return this.selectBalancedCardWithCounting(validPlays, hand);
   }
 
   selectBestShape(hand: Card[], game: WhotGame): CardShape {
@@ -68,7 +68,7 @@ export class DifficultAIStrategy implements AIStrategy {
     // Advanced defensive strategy when opponent is close to winning
     const opponentHandSize = this.getOpponentHandSize(gameState);
     if (opponentHandSize <= 2) {
-      return this.selectDefensiveShape(hand, shapeCounts, gameState);
+      return this.selectDefensiveShape(shapeCounts, gameState);
     }
 
     // Consider the current top card shape for continuity
@@ -129,7 +129,8 @@ export class DifficultAIStrategy implements AIStrategy {
     return bestIndex;
   }
 
-  private selectAggressiveCard(validPlays: number[], hand: Card[], gameState: any): number {
+  private selectAggressiveCard(validPlays: number[], hand: Card[]): number {
+
     // Prioritize special cards that can disrupt opponent
     const specialCards = validPlays.filter(index => {
       const card = hand[index];
@@ -166,7 +167,7 @@ export class DifficultAIStrategy implements AIStrategy {
     return this.selectCardByShapeFrequency(validPlays, hand);
   }
 
-  private selectBalancedCardWithCounting(validPlays: number[], hand: Card[], gameState: any): number {
+  private selectBalancedCardWithCounting(validPlays: number[], hand: Card[]): number {
     // First, try to avoid cards that trigger draws
     const nonDrawCards = validPlays.filter(index => {
       const card = hand[index];
@@ -211,7 +212,7 @@ export class DifficultAIStrategy implements AIStrategy {
     return validPlays[0];
   }
 
-  private selectDefensiveShape(hand: Card[], shapeCounts: Map<CardShape, number>, gameState: any): CardShape {
+  private selectDefensiveShape(shapeCounts: Map<CardShape, number>, gameState: any): CardShape {
     const opponentLikelyShapes = this.analyzeOpponentLikelyShapes(gameState);
     
     const safeShapes: CardShape[] = [];

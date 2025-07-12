@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { WhotGame } from '../WhotGame';
-import { Card, CardShape } from '../types';
+import { Card } from '../types';
 import { CARD_SHAPES, CARD_NUMBERS, STAR_NUMBERS, WHOT_CARD, SPECIAL_CARD_RULES } from '../constants';
 
 describe('WhotGame', () => {
