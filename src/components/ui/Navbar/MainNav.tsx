@@ -12,18 +12,24 @@ export default function MainNav() {
         <CustomLink type="link" to="/about">
           About
         </CustomLink>
+        <CustomLink type="link" to="/galleries">
+          Gallery
+        </CustomLink>
+        <CustomLink type="link" to="/games">
+          Games
+        </CustomLink>
         <CustomLink type="link" to="/playlist">
-          Playlist
+          Favorite Playlist
         </CustomLink>
       </nav>
       <nav className="flex items-center justify-center gap-4">
         <a
           href="/images/resume.pdf"
           target="_blank"
-          className=" gap-3 flex items-center bg-secondary text-light p-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent transition-all ease duration-300  hover:border-secondary hover:bg-light hover:text-secondary"
+          className=" btn-class transition-all ease duration-300   "
         >
           Resume
-          <LinkArrow className="w-5" />
+          <LinkArrow className="w-3 h-3" />
         </a>
         <motion.a
           href="https://twitter.com/soft__code"
@@ -31,7 +37,7 @@ export default function MainNav() {
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.9 }}
         >
-          <TwitterIcon className="w-5 mr-3" />
+          <TwitterIcon className="w-3 mr-3" />
         </motion.a>
         <motion.a
           href="https://github.com/chubbystrings"
@@ -39,7 +45,7 @@ export default function MainNav() {
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.9 }}
         >
-          <GithubIcon className="w-5 mr-3" />
+          <GithubIcon className="w-3 mr-3" />
         </motion.a>
         <motion.a
           href="https://linkedin.com/in/emekaokwor"
@@ -47,7 +53,7 @@ export default function MainNav() {
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.9 }}
         >
-          <LinkedInIcon className="w-5 mr-3" />
+          <LinkedInIcon className="w-3 mr-3" />
         </motion.a>
       </nav>
     </div>

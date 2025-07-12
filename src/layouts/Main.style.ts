@@ -14,7 +14,7 @@ export const MainStyle = styled(motion.div)`
     left: 0;
     right: 0;
     height: 5px;
-    background: #f5f5f5;
+    background: #a66740;
     transform-origin: 0%;
     z-index: 2;
   }

@@ -1,3 +1,4 @@
 export const initialState = {
-  layoutClass: ''
+  layoutClass: '',
+  setGameBackground: false
 };

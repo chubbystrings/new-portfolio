@@ -81,11 +81,27 @@ export default function Experience() {
         ></motion.div>
         <ul className="w-full flex flex-col item-start justify-between ml-4">
           <Details
+            position="Lead Frontend Engineer (Embedded Finance)"
+            company="SeamlessHR"
+            companyLink="https://semalesshr.com"
+            time="2025-present"
+            work="Part of the Embedded Finance team, building and maintaining the seamlessHR Embedded Finance Products"
+            address="Lagos, Nigeria"
+          />
+          <Details
+            position="Senior Frontend Engineer (Embedded Finance)"
+            company="SeamlessHR"
+            companyLink="https://semalesshr.com"
+            time="2024-2025"
+            work="Part of the Embedded Finance team, building and maintaining the seamlessHR Embedded Finance Products"
+            address="Lagos, Nigeria"
+          />
+          <Details
             position="Frontend Engineer"
             company="seamlessHR"
             companyLink="https://semalesshr.com"
-            time="2022-present"
-            work="built and maintained the seamlessHR enterprise Sass application"
+            time="2024-present"
+            work="Part of the Embedded Finance team, building and maintaining the seamlessHR Embedded Finance Products"
             address="Lagos, Nigeria"
           />
           <Details

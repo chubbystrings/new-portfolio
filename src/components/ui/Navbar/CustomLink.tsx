@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NavLink} from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 
 const CustomLink = ({
@@ -13,12 +13,15 @@ const CustomLink = ({
   children: any;
   type: "link" | "button";
 }) => {
+  const location = useLocation();
+  
   return (
     <>
       {type === "link" ? (
         <NavLink
           to={to}
           className={`${className} relative group text-light text-lg`}
+          state={{ from: location.pathname }}
         >
           {({ isActive }) => (
             <>
@@ -26,7 +29,7 @@ const CustomLink = ({
               <span
                 className={` ${
                   isActive ? "w-full" : "w-0"
-                } h-[3px] w-0 inline-block bg-light absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300`}
+                } h-[3px] w-0 inline-block bg-secondary absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300`}
               >
                 &nbsp;
               </span>
@@ -37,6 +40,7 @@ const CustomLink = ({
         <NavLink
           to={to}
           className={`${className} relative group text-light text-lg`}
+          state={{ from: location.pathname }}
         >
           {({ isActive }) => (
             <>

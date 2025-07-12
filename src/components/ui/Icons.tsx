@@ -7,8 +7,8 @@ interface Props extends SVGProps<SVGSVGElement> {
 export const TwitterIcon = ({ className, ...rest}: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1.23em"
-    height="1em"
+    width="10px"
+    height="10px"
         viewBox="0 0 256 209"
     className={`w-full h-auto ${className}`}
     {...rest}
@@ -24,8 +24,8 @@ export const TwitterIcon = ({ className, ...rest}: Props) => (
 export const GithubIcon = ({ className, ...rest }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width="10px"
+    height="10px"
     viewBox="0 0 512 512"
     {...rest}
     className={`w-full h-auto ${className}`}
@@ -41,8 +41,8 @@ export const GithubIcon = ({ className, ...rest }: Props) => (
 export const LinkedInIcon = ({ className, ...rest }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width="10px"
+    height="10px"
     viewBox="0 0 256 256"
     {...rest}
     className={`w-full h-auto ${className}`}

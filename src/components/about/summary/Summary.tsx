@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { motion, useInView} from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { singleWord, title } from "../../../utils/variants";
-import profilePic from "/images/profile.png";
+import profilePic from "/images/gibli_1.png";
 import { useLayoutEffect, useRef, useState } from "react";
 import AnimatedText from "../../ui/AnimatedText";
 
@@ -18,7 +18,20 @@ export default function Summary() {
     "Multitasking. .",
     "communication. ."
   ]);
+
+  // write longer summaries based on the data above
+  // 0 - An eye for details: Long description about having an eye for details. etc. Do not include the titles
+  const dataContext = [
+    "I have a keen eye for details, ensuring that every aspect of my work is polished and refined. This attention to detail allows me to create high-quality digital products that meet the highest standards.",
+    "I excel at problem-solving, using my analytical skills to identify issues and develop effective solutions. This ability enables me to overcome challenges and deliver results in a timely manner.",
+    "My creativity shines through in my work, as I constantly seek innovative ways to enhance user experiences and design visually appealing interfaces. I enjoy thinking outside the box to create unique solutions.",
+    "I am adaptable and thrive in dynamic environments, quickly adjusting to new technologies and methodologies. This flexibility allows me to stay current with industry trends and deliver cutting-edge solutions.",
+    "I am skilled at multitasking, effectively managing multiple projects simultaneously while maintaining a high level of quality. This ability ensures that I can meet deadlines and deliver results efficiently.",
+    "I possess strong communication skills, allowing me to collaborate effectively with team members and clients. I believe that clear communication is essential for successful project outcomes."
+
+  ];
   const [heading, setHeading] = useState(data[random(data.length - 1, 0)]);
+  const [headingIndex, setHeadingIndex] = useState(data.indexOf(heading));
 
 
   function shuffle(array: string[]) {
@@ -40,7 +53,7 @@ export default function Summary() {
       setData(shuffle(data))
       setHeading(data[random(data.length - 1, 0)]);
     }, 5000);
-
+  
     if (!inView) {
       clearTimeout(timer);
     }
@@ -49,6 +62,10 @@ export default function Summary() {
       clearTimeout(timer);
     };
   }, [inView]);
+
+  useLayoutEffect(() => {
+    setHeadingIndex(data.indexOf(heading));
+  }, [heading, data]);
   return (
     <>
       <AnimatedText
@@ -64,44 +81,25 @@ export default function Summary() {
           variants={title}
           ref={wrapperRef}
         >
-          <motion.h2
-            className="mb-4 font-bold uppercase text-lg text-light/75 md:mx-auto xs:text-sm xxs:break-all"
-            variants={singleWord}
-          >
-            Summary
-          </motion.h2>
 
           <motion.p
             className="font-medium sm:text-center md:text-sm xxs:!break-all"
+            initial="initial"
+            whileInView="animate"
+            key={headingIndex}
+            custom={headingIndex}
             variants={singleWord}
           >
-            I am a skilled frontend engineer and designer with 4 years of
-            experience, I have demonstrated a strong ability to bridge the gap
-            between design and development, creating visually stunning and
-            highly functional digital products. I possess a deep understanding
-            of frontend technologies and frameworks, as well as a keen eye for
-            aesthetics and user experience.
+            {dataContext[headingIndex]}
           </motion.p>
 
-          <motion.p
-            className="font-medium my-1 sm:text-center md:text-sm xxs:!break-all"
-            variants={singleWord}
-          >
-            With a strong background in UI/UX design, I am able to craft
-            intuitive and engaging user interfaces that seamlessly integrate
-            with backend systems. I have experience working with a range of
-            design tools and platforms, and possess a keen ability to turn
-            client requirements into tangible and effective design solutions.
-          </motion.p>
 
-          <motion.p
-            className="font-medium my-1 sm:text-center md:text-sm xxs:!break-all"
+          {/* <motion.p
+            className="font-medium sm:text-center md:text-sm xxs:!break-all"
             variants={singleWord}
           >
-            Overall, my combination of technical expertise and design acumen
-            make me a valuable asset to any team or project that seeks to create
-            engaging, user-centered digital experiences.
-          </motion.p>
+            
+          </motion.p> */}
         </motion.div>
         <motion.div
           className="col-span-3 relative h-max rounded-2xl  p-8 lg:hidden md:inline-block md:order-1 md:w-full xxs:col-span-1"

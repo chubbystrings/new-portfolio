@@ -5,30 +5,122 @@
 @layer base {
   html {
     /* font-family: 'Roboto Slab', serif; */
-    font-family: Mulish;
+    /* font-family: Mulish; */
+    /* Headings */
+    /* font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif; */
+  }
+  @layer components {
+    .btn-class {
+      padding: 0px 12px;
+      height: 32px;
+      font-size: 12px;
+      line-height: 14px;
+      display: inline-flex;
+      font-style: normal;
+      font-weight: 400px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      letter-spacing: 0;
+      background-color: var(--secondary);
+      color: var(--light);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background-color: var(--secondary-light);
+      }
+      &:disabled {
+        background-color: var(--disabled);
+        cursor: not-allowed;
+      }
+
+      &.lg {
+        padding: 12px 24px;
+        height: 48px;
+        font-size: 16px;
+        line-height: 24px;
+        border-radius: 8px;
+      }
+      &.success {
+        background-color: var(--game);
+        &:hover {
+          background-color: var(--game-light);
+        }
+        &:disabled {
+          background-color: var(--disabled);
+          cursor: not-allowed;
+        }
+      }
+    }
   }
   body {
-    @apply bg-dark
-  }
-}
-
-  *,
-  *:after,
-  *:before {
-    box-sizing: border-box;
+    @apply bg-primary;
   }
 
   :root {
-    --transition: 0.5s;
-    --container-width: clamp(300px, 80vw, 960px);
-    --brand-hue: 230;
-    --size-1: calc(var(--container-width) * 0.48);
-    --size-2: 0.1;
-    --size-3: calc(var(--container-width) * 0.04);
-    --cards: 12;
+    --font-heading: "Poppins", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-game: "Press Start 2P", monospace;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-poor-story: "Poor Story", cursive;
+    --primary: #382542;
+    --primary-dynamic: #382542;
+    --secondary: #a66740;
+    --primary-light: #793367;
+    --secondary-light: #d5946c;
+    --light: #f5f5f5;
+    --dark: #171616;
+    --disabled: #94a3b8;
+    --game: #2AA146;
+    --game-light: #599968;
   }
 
-  footer {
+  /* Apply to all headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  /* Apply to body text */
+  p,
+  span,
+  div,
+  li {
+    font-family: var(--font-body);
+  }
+  .typewriter-text {
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+
+.text-game {
+  font-family: var(--font-game);
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+:root {
+  --transition: 0.5s;
+  --container-width: clamp(300px, 80vw, 960px);
+  --brand-hue: 230;
+  --size-1: calc(var(--container-width) * 0.48);
+  --size-2: 0.1;
+  --size-3: calc(var(--container-width) * 0.04);
+  --cards: 12;
+}
+
+footer {
   position: fixed;
   bottom: 0;
   left: 0;
