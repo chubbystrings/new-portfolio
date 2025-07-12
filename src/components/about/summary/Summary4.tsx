@@ -2,7 +2,7 @@
 import { motion, useInView } from "framer-motion";
 import { singleWord, title } from "../../../utils/variants";
 import profilePic from "/images/gibli_1.png";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import AnimatedText from "../../ui/AnimatedText";
 
 export default function Summary() {

@@ -1,6 +1,7 @@
 import { WhotGame } from './WhotGame';
 import { AIPlayer } from './AIPlayer';
 import { Card, CardShape, Player } from './types';
+import { AIFactory } from './ai/AIFactory';
 
 /**
  * Event structure for game state changes and player actions.
@@ -29,9 +30,10 @@ export class TwoPlayerGame {
   /**
    * Creates a new two-player game with a human player and AI opponent.
    * @param humanPlayerName - Display name for the human player (default: 'Player')
+   * @param aiDifficulty - AI difficulty level ('easy', 'difficult', 'expert') (default: 'difficult')
    * @throws Error if player creation fails
    */
-  constructor(humanPlayerName: string = 'Player') {
+  constructor(humanPlayerName = 'Player', aiDifficulty: 'easy' | 'difficult' | 'expert' = 'difficult') {
     this.game = new WhotGame();
     this.humanPlayerId = this.game.addPlayer(humanPlayerName) ? 
       this.game.getGameState().players[0].id : '';
@@ -41,8 +43,10 @@ export class TwoPlayerGame {
     if (!this.humanPlayerId || !this.aiPlayerId) {
       throw new Error('Failed to create players');
     }
-
-    this.aiPlayer = new AIPlayer(this.game, this.aiPlayerId);
+    
+    // Create AI strategy and player
+    const aiStrategy = AIFactory.createStrategy(aiDifficulty);
+    this.aiPlayer = new AIPlayer(this.game, this.aiPlayerId, aiStrategy);
   }
 
   /**
@@ -409,8 +413,9 @@ export class TwoPlayerGame {
   /**
    * Resets the game to its initial state and recreates players.
    * Useful for starting a new game without creating a new instance.
+   * @param aiDifficulty - AI difficulty level for the reset game (default: 'difficult')
    */
-  public resetGame(): void {
+  public resetGame(aiDifficulty: 'easy' | 'difficult' | 'expert' = 'difficult'): void {
     this.game.resetGame();
     this.humanPlayerId = this.game.addPlayer('Player') ? 
       this.game.getGameState().players[0].id : '';
@@ -418,7 +423,8 @@ export class TwoPlayerGame {
       this.game.getGameState().players[1].id : '';
     
     if (this.aiPlayerId) {
-      this.aiPlayer = new AIPlayer(this.game, this.aiPlayerId);
+      const aiStrategy = AIFactory.createStrategy(aiDifficulty);
+      this.aiPlayer = new AIPlayer(this.game, this.aiPlayerId, aiStrategy);
     }
   }
 } 

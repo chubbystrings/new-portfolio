@@ -1,5 +1,4 @@
 import React from 'react';
-import { Player } from '../../games/whot';
 
 interface GameControlsProps {
   onDrawCard: () => void;

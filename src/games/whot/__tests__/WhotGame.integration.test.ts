@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { WhotGame } from '../WhotGame';
-import { Card, CardShape } from '../types';
+import { CardShape } from '../types';
 import { SPECIAL_CARD_RULES } from '../constants';
 
 describe('WhotGame Integration Tests', () => {
@@ -23,7 +23,7 @@ describe('WhotGame Integration Tests', () => {
 
       while (!game.isGameOver() && turnCount < maxTurns) {
         const currentPlayer = game.getCurrentPlayer()!;
-        const topCard = game.getTopCard()!;
+        // const topCard = game.getTopCard()!;
         const validPlays = game.getValidPlays(currentPlayer.id);
 
         if (validPlays.length > 0) {
@@ -289,7 +289,7 @@ describe('WhotGame Integration Tests', () => {
       // Manually apply the effect as startGame would
       game['applySpecialRule']({ shape: 'circle', number: SPECIAL_CARD_RULES.PICK_TWO });
       const state = game.getGameState();
-      const alice = state.players[0];
+      // const alice = state.players[0];
       const bob = state.players[1];
       // Bob should have 7 cards (5 + 2 penalty)
       expect(bob.hand.length).toBe(7);
@@ -307,7 +307,7 @@ describe('WhotGame Integration Tests', () => {
       // Manually apply the effect as startGame would
       game['applySpecialRule']({ shape: 'circle', number: SPECIAL_CARD_RULES.GENERAL_MARKET });
       const state = game.getGameState();
-      const alice = state.players[0];
+      // const alice = state.players[0];
       const bob = state.players[1];
       // Both players except current should get 1 card (so Bob gets 1, Alice gets 1, total 8 if 3 players, 6 if 2)
       expect(bob.hand.length).toBeGreaterThanOrEqual(6);

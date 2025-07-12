@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { cardVariants } from "../../../utils/variants";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getImageByKey from "../../../utils/getImageByKey";
 import { SkillsCardWrapper } from "./skills.style";
 
 export default function Skills() {
   const skillRef = useRef(null);
   const wrapperRef = useRef(null);
-  // const inView = useInView(wrapperRef);
   const [child, setChild] = useState("");
-  const [imageKeys, setImageKeys] = useState([
+  const imageKeys = [
     "javascript",
     "html",
     "css",
@@ -23,18 +22,18 @@ export default function Skills() {
     "postgresql",
     "mongodb",
     "firebase",
-  ]);
+  ];
 
 
-  function shuffle(array: string[]) {
-    const newArr = [...array]
-    for (let i = newArr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-    }
+  // function shuffle(array: string[]) {
+  //   const newArr = [...array]
+  //   for (let i = newArr.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  //   }
 
-    return newArr
-  }
+  //   return newArr
+  // }
 
   function random(max: number, min: number) {
     return Math.floor(Math.random() * (max - min + 5)) + min;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { WhotGame as WhotGameLogic } from '../../games/whot/WhotGame';
 import { AIPlayer } from '../../games/whot/AIPlayer';
-import { Card as CardType, CardShape } from '../../games/whot/types';
+import { CardShape } from '../../games/whot/types';
 import { AIFactory, AIDifficulty } from '../../games/whot/ai/AIFactory';
 import GameBoard from './GameBoard';
 import PlayerHand from './PlayerHand';
@@ -48,7 +48,6 @@ const WhotGame: React.FC = () => {
     playCardDraw,
     playWhotPlay,
     playGameStart,
-    playGameShow,
     playGameWin,
     playGameLose,
 
@@ -162,7 +161,7 @@ const WhotGame: React.FC = () => {
   useEffect(() => {
     if (!game || !aiPlayer || game.isGameOver() || aiTurnRunningRef.current) return;
 
-    const gameState = game.getGameState();
+    // const gameState = game.getGameState();
     const currentPlayer = game.getCurrentPlayer();
 
     // If it's the computer's turn, trigger the AI
@@ -238,7 +237,7 @@ const WhotGame: React.FC = () => {
             }
 
             if (isSpecialCard(result.cardNumber || 0)) {
-              const message = specialCardMessage(result.cardNumber || 0, 'Computer');
+              const message = specialCardMessage(result.cardNumber || 0);
 
               // Play appropriate special card sound
               const cardNumber = result.cardNumber || 0;
@@ -416,7 +415,7 @@ const WhotGame: React.FC = () => {
       cardNumber === SPECIAL_CARD_RULES.GENERAL_MARKET;
   };
 
-  const specialCardMessage = (cardNumber: number, player: string) => {
+  const specialCardMessage = (cardNumber: number) => {
     if (cardNumber === SPECIAL_CARD_RULES.HOLD_ON) {
       return `Nice shot! hold on!! 😊`;
     } else if (cardNumber === SPECIAL_CARD_RULES.PICK_TWO) {
@@ -525,7 +524,7 @@ const WhotGame: React.FC = () => {
           setGameStatus("You played a special card! Play again.");
           handlePlayerAction(`You played a special card! Play again.`);
           if (isSpecialCard(cardNumberPlayed || 0)) {
-            const message = specialCardMessage(cardNumberPlayed || 0, humanPlayer.name);
+            const message = specialCardMessage(cardNumberPlayed || 0);
 
             // Play appropriate special card sound
             const cardNumber = cardNumberPlayed || 0;
@@ -667,7 +666,7 @@ const WhotGame: React.FC = () => {
         setGameStatus("You played a special card! Play again.");
         handlePlayerAction(`You played a special card! Play again.`);
         if (isSpecialCard(cardNumberPlayed || 0)) {
-          const message = specialCardMessage(cardNumberPlayed || 0, humanPlayer.name);
+          const message = specialCardMessage(cardNumberPlayed || 0);
           toast.info(message, {
             position: isHumanTurn ? 'bottom-left' : 'bottom-right',
             autoClose: 3000,

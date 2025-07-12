@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import GamePreloader from "../components/ui/GamePreloader";
-import { useMotionTemplate, useMotionValue, animate, motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import { soundService } from "../services/SoundService";
 import { useSound } from "../hooks/useSound";
 import styled from "styled-components";
@@ -37,8 +37,8 @@ export default function GamesLayout() {
     const [showPreloader, setShowPreloader] = useState(true);
     const [gameName, setGameName] = useState("Game");
     const location = useLocation();
-    const primary = useMotionValue('#382542')
-    const background = useMotionTemplate`linear-gradient(to bottom right, ${primary}, #793367, #a66740)`
+    // const primary = useMotionValue('#382542')
+    // const background = useMotionTemplate`linear-gradient(to bottom right, ${primary}, #793367, #a66740)`
 
     useEffect(() => {
         // Show preloader when navigating to a game

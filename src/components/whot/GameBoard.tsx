@@ -13,7 +13,6 @@ interface GameBoardProps {
 
 const GameBoard: React.FC<GameBoardProps> = ({
   topCard,
-  drawPileCount,
   currentShape,
   currentPlayer,
   gameStatus,

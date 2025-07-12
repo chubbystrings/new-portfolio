@@ -14,12 +14,6 @@ interface GameNode {
   depth: number;
 }
 
-interface CardProbability {
-  card: Card;
-  probability: number;
-  expectedValue: number;
-}
-
 interface OpponentPattern {
   shapePreference: Map<CardShape, number>;
   specialCardUsage: Map<number, number>;
@@ -47,7 +41,6 @@ export class ExpertAIStrategy implements AIStrategy {
     defensivePlays: 0,
     totalPlays: 0,
   };
-  private gameHistory: string[] = []; // Track game progression
   private mctsIterations = 1000; // Number of MCTS simulations
   private minimaxDepth = 4; // Search depth for minimax
 
@@ -68,31 +61,28 @@ export class ExpertAIStrategy implements AIStrategy {
 
     // Use MCTS for complex decision making
     if (validPlays.length > 1 && this.shouldUseMCTS(gameState)) {
-      const result = this.monteCarloTreeSearch(validPlays, hand, game);
+      const result = this.monteCarloTreeSearch(validPlays, game);
       return result;
     }
 
     // Use Minimax for tactical decisions
     if (validPlays.length > 1 && this.shouldUseMinimax(gameState)) {
-      const result = this.minimaxSearch(validPlays, hand, game);
+      const result = this.minimaxSearch(validPlays, game);
       return result;
     }
 
     // Fallback to probability-based selection
-    const result = this.probabilityBasedSelection(validPlays, hand, game);
+    const result = this.probabilityBasedSelection(validPlays, hand);
     return result;
   }
 
   selectBestShape(hand: Card[], game: WhotGame): CardShape {
     const gameState = game.getGameState();
 
-    const shapeProbabilities = this.calculateShapeProbabilities(
-      hand,
-      gameState
-    );
+    const shapeProbabilities = this.calculateShapeProbabilities(hand);
 
     // Consider opponent patterns
-    const opponentShapes = this.predictOpponentShapes(gameState);
+    const opponentShapes = this.predictOpponentShapes();
 
     // Use expected value calculation
     let bestShape: CardShape = "circle";
@@ -146,7 +136,6 @@ export class ExpertAIStrategy implements AIStrategy {
   // Monte Carlo Tree Search Implementation
   private monteCarloTreeSearch(
     validPlays: number[],
-    hand: Card[],
     game: WhotGame
   ): number {
     const rootNode: GameNode = {
@@ -163,8 +152,8 @@ export class ExpertAIStrategy implements AIStrategy {
     // Run MCTS simulations
     for (let i = 0; i < this.mctsIterations; i++) {
       const node = this.selectNode(rootNode);
-      const expandedNode = this.expandNode(node, validPlays, hand);
-      const result = this.simulateGame(expandedNode, game);
+      const expandedNode = this.expandNode(node, validPlays);
+      const result = this.simulateGame(expandedNode);
       this.backpropagate(expandedNode, result);
     }
 
@@ -176,12 +165,6 @@ export class ExpertAIStrategy implements AIStrategy {
       },
       { child: rootNode.children[0], ucb1: -Infinity }
     );
-
-    rootNode.children.forEach((child, index) => {
-      const ucb1 = this.calculateUCB1(child);
-      const winRate =
-        child.visits > 0 ? ((child.wins / child.visits) * 100).toFixed(1) : "0";
-    });
 
     const selectedAction = parseInt(bestChild.child.action!.split(":")[1]);
 
@@ -204,7 +187,6 @@ export class ExpertAIStrategy implements AIStrategy {
   private expandNode(
     node: GameNode,
     validPlays: number[],
-    hand: Card[]
   ): GameNode {
     if (node.depth >= 10) return node; // Limit depth
 
@@ -216,7 +198,7 @@ export class ExpertAIStrategy implements AIStrategy {
 
     const action =
       untriedActions[Math.floor(Math.random() * untriedActions.length)];
-    const newGameState = this.simulateAction(node.gameState, action, hand);
+    const newGameState = this.simulateAction(node.gameState);
 
     const childNode: GameNode = {
       gameState: newGameState,
@@ -233,7 +215,7 @@ export class ExpertAIStrategy implements AIStrategy {
     return childNode;
   }
 
-  private simulateGame(node: GameNode, game: WhotGame): number {
+  private simulateGame(node: GameNode): number {
     // Simplified game simulation
     let currentState = { ...node.gameState };
     let currentPlayer = node.playerTurn;
@@ -249,58 +231,49 @@ export class ExpertAIStrategy implements AIStrategy {
       currentPlayer = currentPlayer === "ai" ? "opponent" : "ai";
     }
 
-    return 0.5; // Draw
+    // Return draw if simulation doesn't end
+    return 0.5;
   }
 
   private backpropagate(node: GameNode, result: number): void {
-    while (node) {
+    while (node !== null) {
       node.visits++;
-      if (node.playerTurn === "ai") {
-        node.wins += result;
-      } else {
-        node.wins += 1 - result;
+      if (result === 1) {
+        node.wins++;
       }
       node = node.parent!;
     }
   }
 
   private calculateUCB1(node: GameNode): number {
-    if (node.visits === 0) return Infinity;
-    const exploitation = node.wins / node.visits;
+    const exploitation = node.visits > 0 ? node.wins / node.visits : 0;
     const exploration = Math.sqrt(Math.log(node.parent!.visits) / node.visits);
-    return exploitation + 1.414 * exploration;
+    return exploitation + Math.sqrt(2) * exploration;
   }
 
   // Minimax with Alpha-Beta Pruning
   private minimaxSearch(
     validPlays: number[],
-    hand: Card[],
     game: WhotGame
   ): number {
+    const gameState = this.simulateAction(game.getGameState());
     let bestMove = validPlays[0];
     let bestValue = -Infinity;
-    let alpha = -Infinity;
-    const beta = Infinity;
 
     for (const play of validPlays) {
-      const gameState = this.simulateAction(game.getGameState(), play, hand);
+      const newState = this.simulateAction(gameState);
       const value = this.minimax(
-        gameState,
+        newState,
         this.minimaxDepth - 1,
         false,
-        alpha,
-        beta,
+        -Infinity,
+        Infinity,
         game
       );
 
       if (value > bestValue) {
         bestValue = value;
         bestMove = play;
-      }
-
-      alpha = Math.max(alpha, bestValue);
-      if (alpha >= beta) {
-        break; // Beta cutoff
       }
     }
 
@@ -321,164 +294,129 @@ export class ExpertAIStrategy implements AIStrategy {
 
     if (isMaximizing) {
       let maxEval = -Infinity;
-      const validPlays = this.getValidPlays(gameState);
+      const validPlays = this.getValidPlays();
 
-      for (const play of validPlays) {
-        const newState = this.simulateAction(gameState, play, []);
-        const evaluation = this.minimax(
-          newState,
-          depth - 1,
-          false,
-          alpha,
-          beta,
-          game
-        );
+      for (let i = 0; i < validPlays.length; i++) {
+        const newState = this.simulateAction(gameState);
+        const evaluation = this.minimax(newState, depth - 1, false, alpha, beta, game);
         maxEval = Math.max(maxEval, evaluation);
         alpha = Math.max(alpha, evaluation);
-        if (alpha >= beta) break;
+        if (beta <= alpha) break;
       }
       return maxEval;
     } else {
       let minEval = Infinity;
-      const validPlays = this.getValidPlays(gameState);
+      const validPlays = this.getValidPlays();
 
-      for (const play of validPlays) {
-        const newState = this.simulateAction(gameState, play, []);
-        const evaluation = this.minimax(
-          newState,
-          depth - 1,
-          true,
-          alpha,
-          beta,
-          game
-        );
+      for (let i = 0; i < validPlays.length; i++) {
+        const newState = this.simulateAction(gameState);
+        const evaluation = this.minimax(newState, depth - 1, true, alpha, beta, game);
         minEval = Math.min(minEval, evaluation);
         beta = Math.min(beta, evaluation);
-        if (alpha >= beta) break;
+        if (beta <= alpha) break;
       }
       return minEval;
     }
   }
 
-  // Probability-based selection
+  // Probability-based card selection
   private probabilityBasedSelection(
     validPlays: number[],
     hand: Card[],
-    game: WhotGame
   ): number {
-    const cardProbabilities = this.calculateCardProbabilities(
-      validPlays,
-      hand,
-      game.getGameState()
-    );
-
-    // Select card with highest expected value
-    let bestCard = validPlays[0];
+    const probabilities = this.calculateCardProbabilities(validPlays, hand);
+    let bestIndex = validPlays[0];
     let bestValue = -Infinity;
 
-    for (const [index, probability] of cardProbabilities) {
+    for (const [index, probability] of probabilities) {
       const expectedValue = this.calculateCardExpectedValue(
         index,
         probability,
-        hand,
-        game.getGameState()
+        hand
       );
-
       if (expectedValue > bestValue) {
         bestValue = expectedValue;
-        bestCard = index;
+        bestIndex = index;
       }
     }
 
-    return bestCard;
+    return bestIndex;
   }
 
-  // Card counting and memory
+  // Card memory and opponent pattern tracking
   private updateCardMemory(gameState: any): void {
-    // Track all cards seen in the game
     const allCards = [
       ...gameState.players.flatMap((p: any) => p.hand),
       ...gameState.discardPile,
       ...gameState.drawPile,
     ];
 
-    this.cardMemory.clear();
     allCards.forEach((card: Card) => {
       const key = `${card.shape}-${card.number}`;
       this.cardMemory.set(key, (this.cardMemory.get(key) || 0) + 1);
     });
   }
 
-  // Pattern recognition
   private updateOpponentPatterns(gameState: any): void {
     const opponent = gameState.players.find(
       (p: any) => p.id !== this.getMyPlayerId(gameState)
     );
+
     if (!opponent) return;
 
-    // Analyze recent plays
+    // Update shape preferences
     const recentPlays = gameState.discardPile.slice(-10);
     recentPlays.forEach((card: Card) => {
       if (!card.isWhot) {
-        const current =
-          this.opponentPatterns.shapePreference.get(card.shape) || 0;
+        const current = this.opponentPatterns.shapePreference.get(card.shape) || 0;
         this.opponentPatterns.shapePreference.set(card.shape, current + 1);
-      }
-
-      if (
-        card.number === SPECIAL_CARD_RULES.PICK_TWO ||
-        card.number === SPECIAL_CARD_RULES.GENERAL_MARKET
-      ) {
-        const current =
-          this.opponentPatterns.specialCardUsage.get(card.number) || 0;
-        this.opponentPatterns.specialCardUsage.set(card.number, current + 1);
       }
     });
 
-    this.opponentPatterns.totalPlays = recentPlays.length;
+    this.opponentPatterns.totalPlays++;
   }
 
-  // Risk assessment
+  // Risk assessment and expected value calculation
   private assessPlayRisk(
     validPlays: number[],
     hand: Card[],
     gameState: any
   ): { riskLevel: number; factors: string[] } {
-    const factors: string[] = [];
     let riskLevel = 0;
+    const factors: string[] = [];
 
-    // Check for special cards that might backfire
-    const specialCards = validPlays.filter((index) => {
+    validPlays.forEach((index) => {
       const card = hand[index];
-      return (
-        card.number === SPECIAL_CARD_RULES.PICK_TWO ||
-        card.number === SPECIAL_CARD_RULES.GENERAL_MARKET
-      );
+
+      // Risk of giving opponent advantage
+      if (card.number === SPECIAL_CARD_RULES.PICK_TWO) {
+        riskLevel += 0.3;
+        factors.push("Pick Two might help opponent");
+      }
+
+      if (card.isWhot) {
+        riskLevel += 0.2;
+        factors.push("WHOT gives opponent shape choice");
+      }
+
+      // Risk based on hand size
+      const opponentHandSize = this.getOpponentHandSize(gameState);
+      if (opponentHandSize < 3) {
+        riskLevel += 0.4;
+        factors.push("Opponent has few cards");
+      }
     });
 
-    if (specialCards.length > 0) {
-      riskLevel += 0.3;
-      factors.push("Special cards may trigger opponent advantage");
-    }
-
-    // Check opponent's hand size
-    const opponentHandSize = this.getOpponentHandSize(gameState);
-    if (opponentHandSize <= 2) {
-      riskLevel += 0.4;
-      factors.push("Opponent close to winning");
-    }
-
-    // Check for WHOT cards
+    // Risk of playing last card
     const whotCards = validPlays.filter((index) => hand[index].isWhot);
-    if (whotCards.length > 0) {
-      riskLevel += 0.2;
-      factors.push("WHOT cards give opponent choice");
+    if (whotCards.length === hand.length) {
+      riskLevel += 0.5;
+      factors.push("Playing last card");
     }
 
     return { riskLevel: Math.min(riskLevel, 1), factors };
   }
 
-  // Expected value calculation
   private calculatePlayExpectedValue(
     validPlays: number[],
     hand: Card[],
@@ -486,19 +424,16 @@ export class ExpertAIStrategy implements AIStrategy {
   ): number {
     let totalValue = 0;
 
-    for (const index of validPlays) {
+    validPlays.forEach((index) => {
       const card = hand[index];
       const baseValue = CARD_VALUES[card.number] || 0;
       const shapeValue = this.calculateShapeValue(card.shape, gameState);
-      const specialValue = this.calculateSpecialCardValue(card, gameState);
-
-      totalValue += baseValue + shapeValue + specialValue;
-    }
+      totalValue += baseValue + shapeValue;
+    });
 
     return totalValue / validPlays.length;
   }
 
-  // Game state evaluation
   private evaluateGameState(gameState: any): number {
     const myPlayer = gameState.players.find(
       (p: any) => p.id === this.getMyPlayerId(gameState)
@@ -509,61 +444,50 @@ export class ExpertAIStrategy implements AIStrategy {
 
     if (!myPlayer || !opponent) return 0;
 
+    let score = 0;
+
     // Hand size advantage
-    const handSizeAdvantage =
-      (opponent.hand.length - myPlayer.hand.length) * 10;
+    score += (opponent.hand.length - myPlayer.hand.length) * 10;
 
     // Card value advantage
-    const myCardValue = myPlayer.hand.reduce(
+    const myHandValue = myPlayer.hand.reduce(
       (sum: number, card: Card) => sum + (CARD_VALUES[card.number] || 0),
       0
     );
-    const opponentCardValue = opponent.hand.reduce(
+    const opponentHandValue = opponent.hand.reduce(
       (sum: number, card: Card) => sum + (CARD_VALUES[card.number] || 0),
       0
     );
-    const cardValueAdvantage = myCardValue - opponentCardValue;
+    score += (opponentHandValue - myHandValue);
 
-    // Special cards advantage
+    // Special card advantage
     const mySpecialCards = myPlayer.hand.filter(
-      (card: Card) =>
-        card.isWhot ||
-        card.number === SPECIAL_CARD_RULES.PICK_TWO ||
-        card.number === SPECIAL_CARD_RULES.GENERAL_MARKET
+      (card: Card) => card.isWhot || card.number === SPECIAL_CARD_RULES.PICK_TWO
     ).length;
     const opponentSpecialCards = opponent.hand.filter(
-      (card: Card) =>
-        card.isWhot ||
-        card.number === SPECIAL_CARD_RULES.PICK_TWO ||
-        card.number === SPECIAL_CARD_RULES.GENERAL_MARKET
+      (card: Card) => card.isWhot || card.number === SPECIAL_CARD_RULES.PICK_TWO
     ).length;
-    const specialCardAdvantage = (mySpecialCards - opponentSpecialCards) * 5;
+    score += (opponentSpecialCards - mySpecialCards) * 5;
 
-    const totalEvaluation =
-      handSizeAdvantage + cardValueAdvantage + specialCardAdvantage;
-
-    return totalEvaluation;
+    return score;
   }
 
-  // Helper methods
+  // Decision making helpers
   private shouldUseMCTS(gameState: any): boolean {
     const totalCards = gameState.players.reduce(
       (sum: number, p: any) => sum + p.hand.length,
       0
     );
-    return totalCards <= 8; // Use MCTS in endgame scenarios
+    return totalCards > 10; // Use MCTS for complex game states
   }
 
   private shouldUseMinimax(gameState: any): boolean {
     const myHandSize = this.getMyHandSize(gameState);
     const opponentHandSize = this.getOpponentHandSize(gameState);
-    return myHandSize <= 4 || opponentHandSize <= 4; // Use minimax in critical situations
+    return myHandSize <= 5 || opponentHandSize <= 5; // Use minimax for endgame
   }
 
-  private calculateShapeProbabilities(
-    hand: Card[],
-    gameState: any
-  ): Map<CardShape, number> {
+  private calculateShapeProbabilities(hand: Card[]): Map<CardShape, number> {
     const probabilities = new Map<CardShape, number>();
     const allShapes: CardShape[] = [
       "circle",
@@ -585,7 +509,7 @@ export class ExpertAIStrategy implements AIStrategy {
     return probabilities;
   }
 
-  private predictOpponentShapes(gameState: any): CardShape[] {
+  private predictOpponentShapes(): CardShape[] {
     const likelyShapes: CardShape[] = [];
     const allShapes: CardShape[] = [
       "circle",
@@ -629,8 +553,7 @@ export class ExpertAIStrategy implements AIStrategy {
 
   private calculateCardProbabilities(
     validPlays: number[],
-    hand: Card[],
-    gameState: any
+    hand: Card[]
   ): Map<number, number> {
     const probabilities = new Map<number, number>();
 
@@ -659,8 +582,7 @@ export class ExpertAIStrategy implements AIStrategy {
   private calculateCardExpectedValue(
     index: number,
     probability: number,
-    hand: Card[],
-    gameState: any
+    hand: Card[]
   ): number {
     const card = hand[index];
     let value = probability * (CARD_VALUES[card.number] || 0);
@@ -686,13 +608,6 @@ export class ExpertAIStrategy implements AIStrategy {
     if (topCard && !topCard.isWhot && topCard.shape === shape) {
       return 5; // Matching shape bonus
     }
-    return 0;
-  }
-
-  private calculateSpecialCardValue(card: Card, gameState: any): number {
-    if (card.isWhot) return 10;
-    if (card.number === SPECIAL_CARD_RULES.PICK_TWO) return 5;
-    if (card.number === SPECIAL_CARD_RULES.GENERAL_MARKET) return 3;
     return 0;
   }
 
@@ -722,7 +637,7 @@ export class ExpertAIStrategy implements AIStrategy {
     return { expectedDamage: totalDamage / validPlays.length };
   }
 
-  private simulateAction(gameState: any, action: number, hand: Card[]): any {
+  private simulateAction(gameState: any): any {
     // Simplified action simulation
     return { ...gameState };
   }
@@ -739,7 +654,7 @@ export class ExpertAIStrategy implements AIStrategy {
     );
   }
 
-  private getValidPlays(gameState: any): number[] {
+  private getValidPlays(): number[] {
     // Simplified valid plays calculation
     return [0, 1, 2]; // Placeholder
   }

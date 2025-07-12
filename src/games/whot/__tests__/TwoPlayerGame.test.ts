@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { TwoPlayerGame, GameEvent } from '../TwoPlayerGame';
 
 describe('TwoPlayerGame', () => {
@@ -45,7 +45,7 @@ describe('TwoPlayerGame', () => {
       const validPlays = game.getHumanValidPlays();
       if (validPlays.length > 0) {
         const result = game.humanPlayCard(validPlays[0]);
-        expect(result.success).toBe(true);
+        expect(result).toBe(true);
         // Should emit card played event
         const cardPlayedEvent = events.find(e => e.type === 'card_played');
         expect(cardPlayedEvent).toBeDefined();
@@ -68,7 +68,7 @@ describe('TwoPlayerGame', () => {
 
     it('should reject invalid card plays', () => {
       game.startGame();
-      const validPlays = game.getHumanValidPlays();
+      // const validPlays = game.getHumanValidPlays();
       // Try to play an invalid card index
       const result = game.humanPlayCard(999);
       expect(result).toBe(false);
@@ -201,7 +201,7 @@ describe('TwoPlayerGame', () => {
         const cardToPlay = humanPlayer.hand[validPlays[0]];
         humanPlayer.hand = [cardToPlay];
         const result = game.humanPlayCard(0);
-        expect(result.success).toBe(true);
+        expect(result).toBe(true);
         const gameOverEvent = events.find(e => e.type === 'game_over');
         expect(gameOverEvent).toBeDefined();
         expect(gameOverEvent?.player).toBe('Test Player');
@@ -246,7 +246,7 @@ describe('TwoPlayerGame', () => {
   describe('Game Reset', () => {
     it('should reset the game correctly', () => {
       game.startGame();
-      const initialHandSize = game.getHumanHand().length;
+      // const initialHandSize = game.getHumanHand().length;
       
       game.resetGame();
       
@@ -267,7 +267,7 @@ describe('TwoPlayerGame', () => {
       const whotIndex = humanHand.findIndex(card => card.isWhot);
       if (whotIndex !== -1) {
         const result = game.humanPlayCard(whotIndex, 'circle');
-        expect(result.success).toBe(true);
+        expect(result).toBe(true);
         // Should emit event with shape declaration
         const cardPlayedEvent = events.find(e => e.type === 'card_played');
         expect(cardPlayedEvent?.newShape).toBe('circle');

@@ -1,6 +1,5 @@
-import { Card, CardShape, Player } from './types';
+import { Card, CardShape } from './types';
 import { WhotGame } from './WhotGame';
-import { SPECIAL_CARD_RULES, CARD_VALUES } from './constants';
 import { AIStrategy } from './ai/AIStrategy';
 
 /**

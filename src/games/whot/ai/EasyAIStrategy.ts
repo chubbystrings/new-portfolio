@@ -1,7 +1,7 @@
 import { Card, CardShape } from '../types';
-import { WhotGame } from '../WhotGame';
+// import { WhotGame } from '../WhotGame';
 import { AIStrategy } from './AIStrategy';
-import { CARD_VALUES, SPECIAL_CARD_RULES } from '../constants';
+import { SPECIAL_CARD_RULES } from '../constants';
 
 /**
  * Easy AI strategy implementation.
@@ -17,7 +17,7 @@ export class EasyAIStrategy implements AIStrategy {
     return 'Basic AI that makes simple decisions with some randomness. Good for beginners!';
   }
 
-  selectBestCard(validPlays: number[], hand: Card[], game: WhotGame): number {
+  selectBestCard(validPlays: number[], hand: Card[]): number {
     // Simple strategy: prefer regular cards over special cards
     const regularCards = validPlays.filter(index => {
       const card = hand[index];
@@ -35,7 +35,7 @@ export class EasyAIStrategy implements AIStrategy {
     return validPlays[Math.floor(Math.random() * validPlays.length)];
   }
 
-  selectBestShape(hand: Card[], game: WhotGame): CardShape {
+  selectBestShape(hand: Card[]): CardShape {
     const shapeCounts = new Map<CardShape, number>();
     
     // Count non-WHOT cards by shape
@@ -65,7 +65,7 @@ export class EasyAIStrategy implements AIStrategy {
     return mostCommonShape;
   }
 
-  shouldPlayCard(validPlays: number[], hand: Card[], game: WhotGame): boolean {
+  shouldPlayCard(validPlays: number[]): boolean {
     // Always play if we have valid plays (no strategic thinking)
     return validPlays.length > 0;
   }
