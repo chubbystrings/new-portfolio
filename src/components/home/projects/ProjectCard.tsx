@@ -23,7 +23,7 @@ function ProjectCard({ data, index }: { data: PROJECT; index: number }) {
   const { img, title, url, description } = data;
   return (
     <ProjectCardContainer
-      className="md:!w-[250px] xs:!w-full"
+      className="!w-[250px] xs:!w-full xs:!max-w-[200px]"
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ amount: 0.8 }}

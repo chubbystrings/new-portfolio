@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/ui/Navbar";
-import Footer from "../components/ui/Footer";
+// import Footer from "../components/ui/Footer";
 import { MainStyle, ProgressBarStyle } from "./Main.style";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import Toggle from "../components/ui/social/Toggle";
@@ -31,9 +31,15 @@ export default function Main({ className }: { className?: string }) {
     setScrX(latest);
   });
 
+
   useEffect(() => {
     setLoc(location.pathname);
-  }, [location]);
+    const currentStoredPath = localStorage.getItem('currentLocation');
+    if (currentStoredPath !== location.pathname) {
+      localStorage.setItem('previousLocation', currentStoredPath || location.pathname);
+      localStorage.setItem('currentLocation', location.pathname);
+    } 
+  }, [location.pathname]);
 
   return (
     <>
@@ -45,7 +51,7 @@ export default function Main({ className }: { className?: string }) {
       />
       {!preloader && isPreloadExitComplete && (
         <>
-          <MainStyle className="bg-dark max-w-8xl">
+          <MainStyle className="max-w-8xl">
             <ProgressBarStyle
               className="progress-bar"
               scrX={scrX}
@@ -53,7 +59,7 @@ export default function Main({ className }: { className?: string }) {
             ></ProgressBarStyle>
             <Navbar key={loc} />
             <main
-              className={` w-full inline-block z-0 px-32 xl:px-24 lg:px-16 md:px-12 sm:px-8 xs:px-2 pb-64 ${className} ${globalState.layoutClass}`}
+              className={` w-full inline-block z-0 px-32 xl:px-24 lg:px-16 md:px-12 sm:px-8 xs:px-2 ${className} ${globalState.layoutClass}`}
             >
               <Outlet />
             </main>
@@ -64,7 +70,7 @@ export default function Main({ className }: { className?: string }) {
               scrollYProgress={scrollYProgress}
             />
           </MainStyle>
-          <Footer />
+          {/* <Footer /> */}
         </>
       )}
     </>

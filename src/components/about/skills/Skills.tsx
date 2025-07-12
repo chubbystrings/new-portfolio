@@ -8,7 +8,7 @@ import { SkillsCardWrapper } from "./skills.style";
 export default function Skills() {
   const skillRef = useRef(null);
   const wrapperRef = useRef(null);
-  const inView = useInView(wrapperRef);
+  // const inView = useInView(wrapperRef);
   const [child, setChild] = useState("");
   const [imageKeys, setImageKeys] = useState([
     "javascript",
@@ -61,20 +61,20 @@ export default function Skills() {
     return str;
   }
 
-  useLayoutEffect(() => {
-    const timer = setInterval(() => {
-      setChild(calculateChildren(imageKeys.length));
-      setImageKeys(shuffle(imageKeys))
-    }, 5000);
+  // useLayoutEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setChild(calculateChildren(imageKeys.length));
+  //     setImageKeys(shuffle(imageKeys))
+  //   }, 5000);
 
-    if (!inView) {
-      clearTimeout(timer);
-    }
+  //   if (!inView) {
+  //     clearTimeout(timer);
+  //   }
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [inView]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [inView]);
 
   useEffect(() => {
     setChild(calculateChildren(imageKeys.length));

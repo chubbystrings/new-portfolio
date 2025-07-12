@@ -4,11 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: "#3B3D5A",
+        primary: "#382542",
         light: "#f5f5f5",
-        primary: "#B63E96", // 240,86,199
-        secondary: "#4A193E",
-        "secondary-light": "#793367",
+        dark: "#171616", // 23,22,22
+        secondary: "#a66740",
+        "primary-light": "#793367",
+        "secondary-light": "#d5946c",
+        game: "#2AA146",
       },
       animation: {
         "bounce-slow": "bounce 2s linear infinite",

@@ -29,6 +29,12 @@ export default function MobileNav({ setIsOpen}: { setIsOpen: (val: boolean) => v
         <CustomLink type="button" to="/playlist">
           Playlist
         </CustomLink>
+        <CustomLink type="button" to="/galleries">
+          Gallery
+        </CustomLink>
+        <CustomLink type="button" to="/games">
+          Games
+        </CustomLink>
       </nav>
       <nav className="flex items-center justify-center gap-5 flex-col ">
         <a

@@ -1,17 +1,17 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import profileImage from "/images/profile.png";
+import profileImage from "/images/gibli_1.png";
 import AnimatedText from "../../ui/AnimatedText";
 
 export default function Hero() {
   const heroRef = useRef(null);
   return (
     <div
-      className="flex  text-dark w-full relative min-h-screen sm:min-h-0 sm:mb-10 pt-10 lg:flex-col md:mb-40 sm:pb-24 md:items-center"
+      className="flex  text-dark w-full relative min-h-screen sm:min-h-0 sm:mb-10 pt-10 lg:flex-col md:mb-40 sm:pb-24 lg:items-center"
       ref={heroRef}
     >
       <motion.div
-        className="w-1/2 md:inline-block lg:w-full md:mb-10"
+        className="w-1/2 sm:order-2 order-1 md:inline-block md:mb-10"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{

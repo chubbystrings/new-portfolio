@@ -1,6 +1,6 @@
 import Experience from "../components/about/experience/Experience";
 import Skills from "../components/about/skills/Skills";
-import Summary from "../components/about/summary/Summary";
+import Summary from "../components/about/summary/Summary4";
 import PageTransition from "../components/ui/PageTransition";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 
