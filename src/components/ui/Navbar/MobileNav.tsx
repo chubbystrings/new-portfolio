@@ -1,49 +1,49 @@
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
-import { MdCancel } from 'react-icons/md';
+import { MdCancel, MdGames, MdHome, MdLibraryMusic, MdPerson, MdPhotoAlbum } from 'react-icons/md';
 import CustomLink from './CustomLink';
-import { GithubIcon, LinkArrow, LinkedInIcon, TwitterIcon } from '../Icons';
+// import { GithubIcon, LinkArrow, LinkedInIcon, TwitterIcon } from '../Icons';
 
-export default function MobileNav({ setIsOpen}: { setIsOpen: (val: boolean) => void}) {
+export default function MobileNav({ setIsOpen }: { setIsOpen: (val: boolean) => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
+      initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="max-w-[300px]  px-3 gap-5 z-30 bg-light/40 rounded-lg backdrop-blur-md py-10 hidden lg:flex flex-col justify-between items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      className="max-w-[300px] px-3 gap-5 z-30 bg-light/40 rounded-lg backdrop-blur-md py-2 hidden lg:flex justify-between items-center fixed top-[20px] right-[20px]"
     >
       <div
-        className="absolute top-2 right-2 cursor-pointer"
+        className=""
         onClick={() => setIsOpen(false)}
       >
         <IconContext.Provider value={{ color: "#4A193E" }}>
           <MdCancel />
         </IconContext.Provider>
       </div>
-      <nav className="flex gap-5">
+      <nav className="flex gap-5 items-center justify-center">
         <CustomLink type="button" to="/">
-          Home
+          <MdHome />
         </CustomLink>
         <CustomLink type="button" to="/about">
-          About
+          <MdPerson />
         </CustomLink>
         <CustomLink type="button" to="/playlist">
-          Playlist
+          <MdLibraryMusic />
         </CustomLink>
         <CustomLink type="button" to="/galleries">
-          Gallery
+          <MdPhotoAlbum />
         </CustomLink>
         <CustomLink type="button" to="/games">
-          Games
+          <MdGames />
         </CustomLink>
       </nav>
-      <nav className="flex items-center justify-center gap-5 flex-col ">
+      {/* <nav className="flex items-center justify-center gap-5 flex-col ">
         <a
           href="/images/resume.pdf"
           target="_blank"
-          className=" gap-3 flex items-center bg-secondary text-light p-2.5 px-6 rounded-lg text-lg font-semibold border-2 border-solid border-transparent transition-all ease duration-300  hover:border-secondary hover:bg-light hover:text-secondary"
+          className=" btn-class transition-all ease duration-300   "
         >
-          Resume
-          <LinkArrow className="w-5" />
+          Resumes
+          <LinkArrow className="w-3 h-3" />
         </a>
         <div className="flex gap-3 items-center justify-between">
           <motion.a
@@ -71,7 +71,7 @@ export default function MobileNav({ setIsOpen}: { setIsOpen: (val: boolean) => v
             <LinkedInIcon className="w-5 mr-3" />
           </motion.a>
         </div>
-      </nav>
+      </nav> */}
     </motion.div>
   );
 }

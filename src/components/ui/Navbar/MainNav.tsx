@@ -28,7 +28,7 @@ export default function MainNav() {
           target="_blank"
           className=" btn-class transition-all ease duration-300   "
         >
-          Resume
+          Resumes
           <LinkArrow className="w-3 h-3" />
         </a>
         <motion.a

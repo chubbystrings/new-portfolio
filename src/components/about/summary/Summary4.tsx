@@ -118,12 +118,29 @@ export default function Summary() {
 const TypewriterText = ({ text, className }: { text: string; className?: string }) => {
     const [displayText, setDisplayText] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     useLayoutEffect(() => {
+        // Check if we're on mobile
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024); // lg breakpoint
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
         setDisplayText("");
         setCurrentIndex(0);
         
         if (text) {
+            // If mobile, show full text immediately
+            if (isMobile) {
+                setDisplayText(text);
+                setCurrentIndex(text.length);
+                return;
+            }
+            
+            // Desktop: use typewriter effect
             const timer = setInterval(() => {
                 setCurrentIndex((prev) => {
                     if (prev < text.length) {
@@ -138,17 +155,19 @@ const TypewriterText = ({ text, className }: { text: string; className?: string 
 
             return () => clearInterval(timer);
         }
-    }, [text]);
+        
+        return () => window.removeEventListener('resize', checkMobile);
+    }, [text, isMobile]);
 
     return (
         <motion.h2
-            className={`flex flex-col items-start justify-start md:text-sm  text-2xl text-light/75 md:order-2 xxs:col-span-1 typewriter-text ${className || ''}`}
+            className={`flex flex-col items-start justify-start md:text-sm md:text-center  text-2xl text-light/75 md:order-2 xxs:col-span-1 typewriter-text ${className || ''}`}
             variants={singleWord}
             initial="initial"
             whileInView="animate"
         >
             {displayText}
-            {currentIndex < text.length && (
+            {currentIndex < text.length && !isMobile && (
                 <span className="animate-pulse">|</span>
             )}
         </motion.h2>
