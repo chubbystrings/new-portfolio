@@ -116,7 +116,7 @@ export default function Experience() {
             position="Web Developer"
             company="Simba Travels"
             companyLink=""
-            time="2019-2020"
+            time="2017-2019"
             work="Designed, built, and maintained clients' websites, worked closely with the development team to proffer solutions and decide on technologies to use."
             address="Lagos, Nigeria"
           />
