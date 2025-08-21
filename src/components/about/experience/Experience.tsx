@@ -59,7 +59,7 @@ export default function Experience() {
     offset: ["start end", "center start"],
   });
   return (
-    <div className="mt-24 mb-[20px] w-full" ref={experienceRef}>
+    <div className="mt-24 mb-[100px] w-full" ref={experienceRef}>
       <motion.h2
         className="text-6xl lg:text-4xl sm:text-2xl mb-12 w-full text-center text-light xs:text-md xxs:break-all"
         initial={{ opacity: 0, y: 50 }}
@@ -89,18 +89,18 @@ export default function Experience() {
             address="Lagos, Nigeria"
           />
           <Details
-            position="Senior Frontend Engineer (Embedded Finance)"
-            company="SeamlessHR"
-            companyLink="https://semalesshr.com"
-            time="2024-2025"
-            work="Part of the Embedded Finance team, building and maintaining the seamlessHR Embedded Finance Products"
-            address="Lagos, Nigeria"
+            position="Frontend Developer"
+            company="Radish"
+            companyLink="https://www.getradish.com/"
+            time="2023-2025"
+            work="Part of the Radish team, building and maintaining the Radish POS Products, (Backoffice, KDS system, POS frontend)"
+            address="Remote, United States"
           />
           <Details
             position="Frontend Engineer"
             company="seamlessHR"
             companyLink="https://semalesshr.com"
-            time="2024-present"
+            time="2022-2023"
             work="Part of the Embedded Finance team, building and maintaining the seamlessHR Embedded Finance Products"
             address="Lagos, Nigeria"
           />
@@ -113,8 +113,8 @@ export default function Experience() {
             address="Lagos, Nigeria"
           />
           <Details
-            position="Junior Fullstack Developer"
-            company="Krystal Lab Solutions"
+            position="Web Developer"
+            company="Simba Travels"
             companyLink=""
             time="2019-2020"
             work="Designed, built, and maintained clients' websites, worked closely with the development team to proffer solutions and decide on technologies to use."
